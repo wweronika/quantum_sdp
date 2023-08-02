@@ -12,12 +12,21 @@ def sum_of_traces(A, B, rho):
     return cp.real(cp.trace(result_of_measurements))
  
 def find_max_correlated_measurements(A_operators, rho):
+    if (len(rho.shape()) != 4 
+        or rho.shape()[0] != rho.shape()[1] 
+        or rho.shape()[2] != rho.shape()[3]
+        or A_operators.shape()[0] != A_operators.shape()[1] 
+        or rho.shape()[0] != A_operators.shape()[0]) : 
+        print("Invalid dimensions of rho and A")
+        return
     n_measurements = len(A_operators)
-    d_A = A_operators.shape()[0]
-    d_B = B_operators.shape()[0]
+    d_A = rho.shape()[0]
+    d_B = rho.shape()[2]
     I_B = np.identity(d_B)
     B_operators = []
     constraints = []
+
+    rho = rho.reshape(d_A * d_B, d_A * d_B)
     for i in range(n_measurements - 1):
         B_i = cp.Variable((d_B, d_B), hermitian=True)
         B_operators.append(B_i)
