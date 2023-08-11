@@ -42,8 +42,8 @@ def sum_of_traces_with_bell_coefficients(A, B, rho, bell_coefficients):
         for y in range(n_settings_B):
             for a in range(d_A):
                 for b in range(d_B):
-                    print(np.array([[bell_coefficients[x][y][a][b]]]).shape)
-                    print(cp.matmul(rho, cp.kron(A[x][a], B[y][b])).shape)
+                    # print(np.array([[bell_coefficients[x][y][a][b]]]).shape)
+                    # print(cp.matmul(rho, cp.kron(A[x][a], B[y][b])).shape)
                     result_of_measurements = result_of_measurements + cp.kron(np.array([[bell_coefficients[x][y][a][b]]]), cp.matmul(rho, cp.kron(A[x][a], B[y][b])))
     return cp.real(cp.trace(result_of_measurements))
 
@@ -52,12 +52,13 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
     # i.e. A[0][1] is a rank-1 projector corresponding to A^0_1
     A_operators = [[generate_random_projective_measurement(d, 1) for i in range(n_outcomes)] for j in range(n_settings)]
     B_operators = [[generate_random_projective_measurement(d, 1) for i in range(n_outcomes)] for j in range(n_settings)]
-    print(len(A_operators), len(A_operators[0]), A_operators[0][0].shape)
+    # print(len(A_operators), len(A_operators[0]), A_operators[0][0].shape)
 
     for i in range(n_iterations):
         print("ITERATION NUMBER  " + str(i))
+
         # 1: maximise rho
-        print("maximising rho")
+        # print("maximising rho")
         rho = cp.Variable((2*d, 2*d), hermitian=True)
         constraints = [cp.trace(rho) == 1, rho >> 0]
         problem_rho = cp.Problem(
@@ -68,8 +69,9 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
         )
         problem_rho.solve()
         rho = rho.value
+
         # 2: maximise {A^x_a}
-        print("maximising A")
+        # print("maximising A")
         A_operators = ([[cp.Variable((d, d), hermitian=True) for i in range(n_outcomes)] for j in range(n_settings)])
         constraints = [cp.sum(A_operators[i]) == I_A for i in range(n_settings)]
         for i in range(n_settings):
@@ -83,8 +85,9 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
         )
         problem_A.solve()
         A_operators = [[A_operators[i][j].value for i in range(n_outcomes)] for j in range(n_settings)]
+
         # 3: maximise {B^y_b}
-        print("maximising B")
+        # print("maximising B")
         B_operators = ([[cp.Variable((d, d), hermitian=True) for i in range(n_outcomes)] for j in range(n_settings)])
         constraints = [cp.sum(B_operators[i]) == I_B for i in range(n_settings)]
         for i in range(n_settings):
@@ -98,6 +101,7 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
         )
         problem_B.solve()
         B_operators = [[B_operators[i][j].value for i in range(n_outcomes)] for j in range(n_settings)]
+        print("Value: " + str(problem_B.value))
     return rho, A_operators, B_operators
 
 chsh_coefficients = get_chsh_coefficients()
