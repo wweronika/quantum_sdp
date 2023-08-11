@@ -59,7 +59,7 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
 
         # 1: maximise rho
         # print("maximising rho")
-        rho = cp.Variable((2*d, 2*d), hermitian=True)
+        rho = cp.Variable((d*d, d*d), hermitian=True)
         constraints = [cp.trace(rho) == 1, rho >> 0]
         problem_rho = cp.Problem(
             cp.Maximize(
