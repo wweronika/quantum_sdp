@@ -35,11 +35,6 @@ def sum_of_traces_with_bell_coefficients(A, B, rho, bell_coefficients):
                     result_of_measurements = result_of_measurements + bell_coefficients[x][y][a][b] * cp.trace(cp.matmul(rho, cp.kron(A[x][a], B[y][b])))
     return cp.real(result_of_measurements)
 
-generate_random_projective_measurement(d=2, rank=1)
-
-A_initial = generate_random_projective_measurement(d, 1)
-B_initial = generate_random_projective_measurement(d, 1)
-
 # A[setting][outcome][x][y]
 # i.e. A[0][1] is a rank-1 projector corresponding to A^0_1
 A_operators = [[generate_random_projective_measurement(d, 1) for i in range(n_outcomes)] for j in range(n_settings)]
