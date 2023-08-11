@@ -16,13 +16,6 @@ for ket in kets:
 rho = rho / N
 
 
-# ket_0 = np.array([[1, 0]]).T 
-# ket_1 = np.array([[0, 1]]).T
-
-# print(np.kron(ket_0, ket_0))
-
-# rho = 1/2 * (np.kron(ket_0, ket_0) @ np.kron(ket_0, ket_0).T + np.kron(ket_1, ket_1)  @ np.kron(ket_1, ket_1).T)
-# # rho = rho.reshape((2,2,2,2))
 
 # print(rho)
 # A_0 = np.array([[1, 0], [0, 0]])
