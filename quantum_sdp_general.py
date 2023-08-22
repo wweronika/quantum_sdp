@@ -13,6 +13,19 @@ def sum_of_traces(A, B, rho):
     for i in range(len(A)):
         result_of_measurements = result_of_measurements + cp.matmul(rho, cp.kron(A[i], B[i]))
     return cp.real(cp.trace(result_of_measurements))
+
+def probabilities_from_expectation_values(A, B, AB):
+    # Assume all measurements are qubits, i.e. have 2 outcomes: 0 (value 1) or 1 (value -1)
+    n_outcomes_A = 2
+    n_outcomes_B = 2
+    n_measurements_A = len(A)
+    n_measurements_B = len(B)
+    c = np.zeros(shape=(n_measurements_A, n_measurements_B, n_outcomes_A, n_outcomes_B)) # index order: c[x][y][a][b]
+    for x in range(n_measurements_A):
+        for y in range(n_measurements_B):
+            for a in range(n_outcomes_A):
+                for b in range(n_outcomes_B):
+                    c[x][y][a][b] = 1/4 * (1 + pow(-1, a) * A[x] + pow(-1, b) * B[y]  + pow(-1, a+b) * AB[x][y])
  
 def find_max_correlated_measurements(A_operators, rho):
     if (len(rho.shape) != 2 
