@@ -131,13 +131,13 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
         print("Value: " + str(problem_B.value))
     return rho, A_operators, B_operators
 
-chsh_coefficients = get_chsh_coefficients()
-rho, A_operators, B_operators = optimise_p_NL(n_outcomes, n_settings, d, chsh_coefficients)
+# chsh_coefficients = get_chsh_coefficients()
+# rho, A_operators, B_operators = optimise_p_NL(n_outcomes, n_settings, d, chsh_coefficients)
 
-print("rho: ")
-print(rho)
-print("A_operators: ")
-print(A_operators)
-print("B_operators: ")
-print(B_operators)
+# print("rho: ")
+# print(rho)
+# print("A_operators: ")
+# print(A_operators)
+# print("B_operators: ")
+# print(B_operators)
 

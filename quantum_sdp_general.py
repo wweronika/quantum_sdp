@@ -26,6 +26,7 @@ def probabilities_from_expectation_values(A, B, AB):
             for a in range(n_outcomes_A):
                 for b in range(n_outcomes_B):
                     c[x][y][a][b] = 1/4 * (1 + pow(-1, a) * A[x] + pow(-1, b) * B[y]  + pow(-1, a+b) * AB[x][y])
+    return c
  
 def find_max_correlated_measurements(A_operators, rho):
     if (len(rho.shape) != 2 
