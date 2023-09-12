@@ -20,13 +20,44 @@ def probabilities_from_expectation_values(A, B, AB):
     n_outcomes_B = 2
     n_measurements_A = len(A)
     n_measurements_B = len(B)
-    c = np.zeros(shape=(n_measurements_A, n_measurements_B, n_outcomes_A, n_outcomes_B)) # index order: c[x][y][a][b]
+    p = np.zeros(shape=(n_measurements_A, n_measurements_B, n_outcomes_A, n_outcomes_B)) # index order: c[x][y][a][b]
     for x in range(n_measurements_A):
         for y in range(n_measurements_B):
             for a in range(n_outcomes_A):
                 for b in range(n_outcomes_B):
-                    c[x][y][a][b] = 1/4 * (1 + pow(-1, a) * A[x] + pow(-1, b) * B[y]  + pow(-1, a+b) * AB[x][y])
+                    # p(a,b|x,y) = 1/4*[ 1 + (-1)^a*<A_x> + (-1)^b*<B_y> + (-1)^(a+b)*<A_x B_y> ]
+                    p[x][y][a][b] = 1/4 * (1 + pow(-1, a) * A[x] + pow(-1, b) * B[y]  + pow(-1, a+b) * AB[x][y])
+    return p
+
+def coefficients_from_expectation_values(A, B, AB):
+    n_outcomes_A = 2
+    n_outcomes_B = 2
+    n_measurements_A = len(A)
+    n_measurements_B = len(B)
+    c = np.zeros(shape=(n_measurements_A, n_measurements_B, n_outcomes_A, n_outcomes_B)) # index order: c[x][y][a][b]
+    for x, c_A_x in enumerate(A):
+        for b in range(n_outcomes_B):
+            # Arbitrary selection of y due to no-signalling
+            y = 0
+            # A_x = p_A(0 | x) - p_A(1 | x)
+            c[x][y][0][b] += c_A_x
+            c[x][y][1][b] -= c_A_x
+    for y, c_B_y in enumerate(B):
+        for a in range(n_outcomes_A):
+            # Arbitrary selection of x due to no-signalling
+            x = 0
+            # B_y = p_B(0 | y) - p_B(1 | y)
+            c[x][y][a][0] += c_B_y
+            c[x][y][a][1] -= c_B_y
+    for x, c_prime_ax in enumerate(AB):
+        for y, c_prime_abxy in enumerate(c_prime_ax):
+            c[x][y][0][0] += c_prime_abxy
+            c[x][y][0][1] -= c_prime_abxy
+            c[x][y][1][0] -= c_prime_abxy
+            c[x][y][1][1] += c_prime_abxy
     return c
+
+# sum_x,y,a,b c[x][y][a][b] * p(a,b | x,y)
  
 def find_max_correlated_measurements(A_operators, rho):
     if (len(rho.shape) != 2 
