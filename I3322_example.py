@@ -8,6 +8,13 @@ B = [-1, -2, 0]
 # AB_ij expectation value coefficients as seen in the paper
 AB = [[1, 1, -1], [1, 1, 1], [-1, 1, 0]]
 
+# # A_i expectation value coefficients as seen in the paper
+# A = [0, 1, 0]
+# # B expectation value coefficients as seen in the paper
+# B = [1, 2, 0]
+# # AB_ij expectation value coefficients as seen in the paper
+# AB = [[-1, -1, 1], [-1, -1, -1], [1, -1, 0]]
+
 chsh_A = [0,0]
 chsh_B = [0,0]
 chsh_AB = [[1, 1], [1, -1]]
@@ -20,6 +27,7 @@ chsh_AB = [[1, 1], [1, -1]]
 # print(bell_coefficients == chsh_coefficients)
 
 bell_coefficients = coefficients_from_expectation_values(A, B, AB)
+
 # print(bell_coefficients.shape)
 print(bell_coefficients)
 print(bell_coefficients[0][1][1][1])

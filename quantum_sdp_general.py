@@ -40,20 +40,22 @@ def coefficients_from_expectation_values(A, B, AB):
             # Arbitrary selection of y due to no-signalling
             y = 0
             # A_x = p_A(0 | x) - p_A(1 | x)
-            c[x][y][0][b] += c_A_x
-            c[x][y][1][b] -= c_A_x
+            # c[x][y][0][b] += c_A_x
+            # c[x][y][1][b] -= c_A_x
+            c[x][y][1][b] += c_A_x
     for y, c_B_y in enumerate(B):
         for a in range(n_outcomes_A):
             # Arbitrary selection of x due to no-signalling
             x = 0
             # B_y = p_B(0 | y) - p_B(1 | y)
-            c[x][y][a][0] += c_B_y
-            c[x][y][a][1] -= c_B_y
+            # c[x][y][a][0] += c_B_y
+            # c[x][y][a][1] -= c_B_y
+            c[x][y][a][1] += c_B_y
     for x, c_prime_ax in enumerate(AB):
         for y, c_prime_abxy in enumerate(c_prime_ax):
-            c[x][y][0][0] += c_prime_abxy
-            c[x][y][0][1] -= c_prime_abxy
-            c[x][y][1][0] -= c_prime_abxy
+            # c[x][y][0][0] += c_prime_abxy
+            # c[x][y][0][1] -= c_prime_abxy
+            # c[x][y][1][0] -= c_prime_abxy
             c[x][y][1][1] += c_prime_abxy
     return c
 
