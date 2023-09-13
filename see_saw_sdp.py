@@ -6,7 +6,7 @@ from math import sqrt
 n_outcomes = 2
 n_settings = 2
 d = 2
-n_iterations = 2
+n_iterations = 10
 I_A = np.identity(d)
 I_B = np.identity(d)
 
@@ -82,6 +82,9 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
     # i.e. A[0][1] is a rank-1 projector corresponding to A^0_1
     A_operators = [[generate_random_projective_measurement(d, 1) for i in range(n_outcomes)] for j in range(n_settings)]
     B_operators = [[generate_random_projective_measurement(d, 1) for i in range(n_outcomes)] for j in range(n_settings)]
+
+    I_A = np.identity(d)
+    I_B = np.identity(d)
 
     for i in range(n_iterations):
         # 1: maximise rho

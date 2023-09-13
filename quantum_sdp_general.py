@@ -57,6 +57,34 @@ def coefficients_from_expectation_values(A, B, AB):
             c[x][y][1][1] += c_prime_abxy
     return c
 
+def coefficients_from_collin_gissin(A, B, AB):
+    n_outcomes_A = len(A[0])
+    n_outcomes_B = len(B[0])
+    n_measurements_A = len(A)
+    n_measurements_B = len(B)
+    c = np.zeros(shape=(n_measurements_A, n_measurements_B, n_outcomes_A, n_outcomes_B)) # index order: c[x][y][a][b]
+    for x, A_x in enumerate(A):
+        for a, p_a_given_x in enumerate(A_x):
+            y = 0
+            for b in range(n_outcomes_B):
+                c[x][y][a][b] += p_a_given_x
+    for y, B_y in enumerate(B):
+        for b, p_b_given_y in enumerate(B_y):
+            x = 0
+            for a in range(n_outcomes_A):
+                c[x][y][a][b] += p_b_given_y
+    for x in range(n_measurements_A):
+        for y in range(n_measurements_B):
+            for a in range(n_outcomes_A):
+                for b in range(n_outcomes_B):
+                    # print(f"x={x}, y={y}, a={a}, b={b}")
+                    # print(c[x][y][a][b])
+                    # print(AB[x][y][a][b])
+                    c[x][y][a][b] += AB[x][y][a][b]
+    return c
+
+
+
 # sum_x,y,a,b c[x][y][a][b] * p(a,b | x,y)
  
 def find_max_correlated_measurements(A_operators, rho):
