@@ -131,8 +131,8 @@ def optimise_p_NL(n_settings, n_outcomes, d, bell_coefficients):
         )
         problem_B.solve()
         B_operators = [[B_operators[i][j].value for j in range(n_outcomes)] for i in range(n_settings)]
-        print("Value: " + str(problem_B.value))
-    return rho, A_operators, B_operators
+        # print("Value: " + str(problem_B.value))
+    return rho, A_operators, B_operators, problem_B.value
 
 # chsh_coefficients = get_chsh_coefficients()
 # rho, A_operators, B_operators = optimise_p_NL(n_outcomes, n_settings, d, chsh_coefficients)
