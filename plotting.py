@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Read data from file
-d = 4
+d = 2
 bin_size = 0.002
 with open(f'results_d{d}.csv', 'r') as f:
     data = [float(line.strip()) for line in f]

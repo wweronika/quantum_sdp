@@ -1,5 +1,5 @@
 from quantum_sdp_general import *
-from see_saw_sdp import optimise_p_NL, get_chsh_coefficients
+from see_saw_sdp import optimise_p_NL
 
 A = [[0, 0, 0], [-3, -3, 0]]
 B = [[-3, -3, 0], [0, 0, 0]]
