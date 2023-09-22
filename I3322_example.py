@@ -1,5 +1,5 @@
 from quantum_sdp_general import *
-from see_saw_sdp import optimise_p_NL, get_chsh_coefficients
+from see_saw_sdp import optimise_p_NL
 
 # A_i expectation value coefficients as seen in the paper
 A = [0, -1, 0]
@@ -8,11 +8,7 @@ B = [-1, -2, 0]
 # AB_ij expectation value coefficients as seen in the paper
 AB = [[1, 1, -1], [1, 1, 1], [-1, 1, 0]]
 
-chsh_A = [0,0]
-chsh_B = [0,0]
-chsh_AB = [[1, 1], [1, -1]]
-
-bell_coefficients = coefficients_from_expectation_values(A, B, AB)
+bell_coefficients = coefficients_from_expectation_values_2(A, B, AB)
 
 file = open("results.csv", "a")
 

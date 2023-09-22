@@ -1,7 +1,17 @@
 import cvxpy as cp
 import numpy as np
 from math import sqrt
-from see_saw_sdp import get_chsh_coefficients, sum_of_traces_with_bell_coefficients
+from see_saw_sdp import sum_of_traces_with_bell_coefficients
+
+def get_chsh_coefficients():
+    n_settings = n_outcomes = 2
+    coefficients = np.zeros(shape=(n_settings, n_settings, n_outcomes, n_outcomes))
+    for x in range(n_settings):
+        for y in range(n_settings):
+            for a in range(n_outcomes):
+                for b in range(n_outcomes):
+                    coefficients[x][y][a][b] = pow(-1, a + b + x*y)
+    return coefficients
 
 def get_optimal_values():
 
@@ -37,9 +47,5 @@ chsh_coefficients = get_chsh_coefficients()
 print(chsh_coefficients[0][1][0][1])
 
 value = sum_of_traces_with_bell_coefficients(A_operators, B_operators, rho, chsh_coefficients).value
-print("value: ")
+print("Value: ")
 print(value)
-
-# for x in range(2):
-#     for a in range(2):
-#         print(A_operators[x][a].shape)
